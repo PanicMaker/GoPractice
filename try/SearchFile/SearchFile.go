@@ -11,12 +11,12 @@ var matches int
 
 func main() {
 	start := time.Now()
-	search("/Users/vincent/", true)
+	search("/Users/vincent/")
 	fmt.Println(matches, "matches")
 	fmt.Println(time.Since(start))
 }
 
-func search(path string, master bool) {
+func search(path string) {
 	files, err := ioutil.ReadDir(path)
 	if err == nil {
 		for _, file := range files {
@@ -25,7 +25,7 @@ func search(path string, master bool) {
 				matches++
 			}
 			if file.IsDir() {
-				search(path+name+"/", false)
+				search(path + name + "/")
 			}
 		}
 	}
