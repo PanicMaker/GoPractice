@@ -6,8 +6,11 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"time"
 )
+
+var num = 1
 
 func main() {
 	//r := gin.Default()
@@ -35,7 +38,9 @@ func main() {
 	r.MaxMultipartMemory = 8 << 20
 
 	r.GET("/", func(context *gin.Context) {
-		context.String(200, "Hello")
+		num++
+		context.String(200, strconv.Itoa(num))
+
 	})
 
 	// 匹配 /user/name
