@@ -6,7 +6,7 @@ import (
 	"runtime"
 )
 
-func main() {
+func getOsInfo() {
 	var goos string = runtime.GOOS
 	fmt.Printf("The operatoring system is %s\n", goos)
 	path := os.Getenv("PATH")

@@ -1,5 +1,0 @@
-package try
-
-func transform() {
-
-}

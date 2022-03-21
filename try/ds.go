@@ -18,7 +18,3 @@ func dataLength() string {
 
 	return "data length"
 }
-
-func main() {
-	dataLength()
-}

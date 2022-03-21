@@ -15,7 +15,7 @@ type Limit struct {
 	channel chan struct{}
 }
 
-// Limit struct 初始化
+// New Limit struct 初始化
 func New(number int) *Limit {
 	return &Limit{
 		number:  number,
