@@ -1,9 +1,10 @@
 module GoPractice
 
-go 1.17
+go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.7.7
+	github.com/panjf2000/ants/v2 v2.4.8
 	go.etcd.io/bbolt v1.3.6
 )
 
