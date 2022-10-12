@@ -56,7 +56,7 @@ func main() {
 		c.String(http.StatusOK, "%s is a %s", name, role)
 	})
 
-	// POST
+	// 获取POST参数
 	r.POST("/form", func(c *gin.Context) {
 		username := c.PostForm("username")
 		password := c.DefaultPostForm("password", "000000") // 可设置默认值
@@ -82,6 +82,7 @@ func main() {
 		})
 	})
 
+	// Map参数(字典参数)
 	r.POST("/post", func(c *gin.Context) {
 		ids := c.QueryMap("ids")
 		names := c.PostFormMap("names")
@@ -92,6 +93,7 @@ func main() {
 		})
 	})
 
+	// 重定向(Redirect)
 	r.GET("/redirect", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/index")
 	})
