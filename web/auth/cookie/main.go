@@ -45,7 +45,7 @@ func main() {
 	})
 
 	r.GET("/login", func(c *gin.Context) {
-		c.SetCookie("abc", "123", 60, "/", "127.0.0.1", false, true)
+		c.SetCookie("abc", "123", 60, "/", "localhost", false, true)
 		c.String(http.StatusOK, "Login success!")
 	})
 
