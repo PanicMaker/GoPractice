@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"net/http"
 	"strconv"
 )
@@ -22,17 +24,45 @@ type (
 		Title     string `json:"title"`
 		Completed bool   `json:"completed"`
 	}
+
+	dsConfig struct {
+		user   string
+		pass   string
+		adrr   string
+		port   string
+		dbname string
+	}
 )
 
 func init() {
 	//open a db connection
 	var err error
-	db, err = gorm.Open("mysql", "root:11235813@/demo?charset=utf8mb4&parseTime=True&loc=Local")
-	if err != nil {
-		panic("failed to connect database")
-	}
+	db = sqlDb()
+
 	//Migrate the schema
-	db.AutoMigrate(&todoModel{})
+	err = db.AutoMigrate(&todoModel{})
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func sqlDb() *gorm.DB {
+	conf := &dsConfig{
+		user:   "root",      // 用户名
+		pass:   "123456",    // 密码
+		adrr:   "localhost", // 地址
+		port:   "3306",      // 端口
+		dbname: "demo",      // 数据库名称
+	}
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8&parseTime=True&loc=Local", conf.user, conf.pass, conf.adrr, conf.port, conf.dbname)
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info), // 打印所有sql
+	})
+	if err != nil {
+		panic("failed to connect database, err=" + err.Error())
+	}
+	return db
 }
 
 func main() {
@@ -94,13 +124,12 @@ func fetchAllTodo(c *gin.Context) {
 			Title:     item.Title,
 			Completed: completed,
 		})
-
-		c.JSON(http.StatusOK, gin.H{
-			"status": http.StatusOK,
-			"data":   _todos,
-		})
 	}
 
+	c.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+		"data":   _todos,
+	})
 }
 
 func fetchSingleTodo(c *gin.Context) {

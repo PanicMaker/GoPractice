@@ -5,8 +5,10 @@ go 1.19
 require (
 	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-gonic/gin v1.8.1
-	github.com/jinzhu/gorm v1.9.16
+	github.com/panjf2000/ants/v2 v2.5.0
 	go.etcd.io/bbolt v1.3.6
+	gorm.io/driver/mysql v1.4.1
+	gorm.io/gorm v1.23.8
 )
 
 require (

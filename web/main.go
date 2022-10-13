@@ -132,5 +132,14 @@ func main() {
 		c.String(http.StatusOK, fmt.Sprintf("%d files uploaded!", len(files)))
 	})
 
+	r.GET("/async", func(c *gin.Context) {
+		copyContext := c.Copy()
+
+		go func() {
+			time.Sleep(3 * time.Second)
+			log.Println("异步执行：" + copyContext.Request.URL.Path)
+		}()
+	})
+
 	r.Run(":9999")
 }
