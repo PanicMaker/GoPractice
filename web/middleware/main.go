@@ -29,7 +29,7 @@ func main() {
 	// 默认使用了2个中间件Logger(), Recovery()
 	r := gin.Default()
 	// 注册中间件
-	r.Use(MiddleWare())
+	r.Use(MiddleWare(), MaxAllowed(3))
 	// {}为了代码规范
 	{
 		r.GET("/ce", func(c *gin.Context) {
