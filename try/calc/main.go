@@ -1,8 +1,8 @@
 package main
 
 import (
-	"GoPractice/calc/add"
-	"GoPractice/calc/subtract"
+	"GoPractice/try/calc/add"
+	"GoPractice/try/calc/subtract"
 	"fmt"
 )
 
