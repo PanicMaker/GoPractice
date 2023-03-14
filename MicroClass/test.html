@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>请求接口A或B</title>
+    <meta http-equiv="contentType" content="text/html" charset="utf-8">
+    <script>
+		function callAPI() {
+			// 设置请求选项
+			const options = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({data: 'example'})
+			};
+
+			// 发送请求到接口A
+			fetch('http://localhost:8080/A', options)
+				.then(response => {
+					// 如果响应正常，显示响应结果
+					if (response.ok) {
+						console.log('接口A响应正常');
+						return response.json();
+					}
+
+					// 如果响应异常，则发送请求到接口B
+					console.log('接口A响应异常，正在请求接口B...');
+					return fetch('http://localhost:8080/B', options)
+						.then(response => {
+							if (response.ok) {
+								console.log('接口B响应正常');
+								return response.json();
+							}
+
+							// 如果接口B响应仍然异常，则抛出错误
+							console.error('接口B响应异常');
+						});
+				})
+				.then(result => {
+					// 格式化并显示响应结果
+					const formattedResult = JSON.stringify(result, null, 2);
+					document.getElementById('result').textContent = formattedResult;
+				})
+				.catch(error => {
+					console.error('发生错误：', error);
+				});
+		}
+	</script>
+</head>
+<body>
+<button onclick="callAPI()">点击请求接口A或B</button>
+<div id="result"></div>
+</body>
+</html>
