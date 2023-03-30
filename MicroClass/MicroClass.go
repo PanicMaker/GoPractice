@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -11,18 +12,16 @@ func main() {
 
 	g.POST("/A", func(c *gin.Context) {
 
-		c.JSON(400, gin.H{
-			"Url":    c.Request.URL.String(),
-			"Header": c.Request.Header,
-			"Method": c.Request.Method,
+		c.JSON(200, gin.H{
+			"Url":  c.Request.URL.String(),
+			"Data": "你正在请求接口 A",
 		})
 	})
 
 	g.POST("/B", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"Url":    c.Request.URL.String(),
-			"Header": c.Request.Header,
-			"Method": c.Request.Method,
+			"Url":  c.Request.URL.String(),
+			"Data": "你正在请求接口 B",
 		})
 	})
 

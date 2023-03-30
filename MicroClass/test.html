@@ -1,54 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>请求接口A或B</title>
-    <meta http-equiv="contentType" content="text/html" charset="utf-8">
+    <meta charset="UTF-8">
     <script>
-		function callAPI() {
-			// 设置请求选项
-			const options = {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({data: 'example'})
-			};
+        function callAPI(apiUrl) {
+            // 设置请求选项
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({data: 'example'})
+            };
 
-			// 发送请求到接口A
-			fetch('http://localhost:8080/A', options)
-				.then(response => {
-					// 如果响应正常，显示响应结果
-					if (response.ok) {
-						console.log('接口A响应正常');
-						return response.json();
-					}
+            // 发送请求到指定的API
+            fetch(apiUrl, options)
+                .then(response => {
+                    // 如果响应正常，格式化并显示响应结果
+                    if (response.ok) {
+                        console.log(`请求${apiUrl}响应正常`);
+                        return response.json();
+                    }
 
-					// 如果响应异常，则发送请求到接口B
-					console.log('接口A响应异常，正在请求接口B...');
-					return fetch('http://localhost:8080/B', options)
-						.then(response => {
-							if (response.ok) {
-								console.log('接口B响应正常');
-								return response.json();
-							}
+                    // 如果响应异常，则发送请求到接口B
+                    console.log(`请求${apiUrl}响应异常，正在请求接口B...`);
+                    return fetch('http://127.0.0.1:8080/B', options)
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('接口B响应正常');
+                                return response.json();
+                            }
 
-							// 如果接口B响应仍然异常，则抛出错误
-							console.error('接口B响应异常');
-						});
-				})
-				.then(result => {
-					// 格式化并显示响应结果
-					const formattedResult = JSON.stringify(result, null, 2);
-					document.getElementById('result').textContent = formattedResult;
-				})
-				.catch(error => {
-					console.error('发生错误：', error);
-				});
-		}
-	</script>
+                            // 如果接口B响应仍然异常，则抛出错误
+                            console.error('接口B响应异常');
+                        });
+                })
+                .then(result => {
+                    // 格式化并显示响应结果
+                    const formattedResult = JSON.stringify(result, null, 2);
+                    document.getElementById('result').textContent = formattedResult;
+                })
+                .catch(error => {
+                    console.error('发生错误：', error);
+                });
+        }
+
+        function captureConsole() {
+            const consoleOutput = document.getElementById('console-output');
+            const originalLog = console.log;
+            console.log = function(message) {
+                originalLog.apply(console, arguments);
+                consoleOutput.textContent += message + '\n';
+            };
+        }
+
+        function clearOutput() {
+            document.getElementById('result').textContent = '';
+            document.getElementById('console-output').textContent = '';
+        }
+    </script>
 </head>
 <body>
-<button onclick="callAPI()">点击请求接口A或B</button>
-<div id="result"></div>
+<button onclick="callAPI('http://127.0.0.1:8080/A')">请求接口A</button>
+<button onclick="callAPI('http://127.0.0.1:8080/B')">请求接口B</button>
+<button onclick="clearOutput()">清除输出</button>
+<br>
+<h4>接口响应内容</h4>
+<textarea id="result" rows="10" cols="80"></textarea>
+<br>
+<h4>控制台输出</h4>
+<textarea id="console-output" rows="10" cols="80"></textarea>
+<script>captureConsole();</script>
 </body>
 </html>
