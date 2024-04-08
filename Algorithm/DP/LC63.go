@@ -1,14 +1,17 @@
 package DP
 
+// 63. 不同路径 II
+// https://leetcode.cn/problems/unique-paths-ii/description/
+
 func uniquePathsWithObstacles(obstacleGrid [][]int) int {
-	m := len(obstacleGrid)
-	n := len(obstacleGrid[0])
+	m, n := len(obstacleGrid), len(obstacleGrid[0])
 
 	dp := make([][]int, m)
 	for i := range dp {
 		dp[i] = make([]int, n)
 	}
 
+	// 初始化第一行和第一列
 	for i := 0; i < m; i++ {
 		if obstacleGrid[i][0] == 1 {
 			for x := i; x < m; x++ {
@@ -19,6 +22,7 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 			dp[i][0] = 1
 		}
 	}
+
 	for j := 0; j < n; j++ {
 		if obstacleGrid[0][j] == 1 {
 			for y := j; y < n; y++ {
@@ -30,13 +34,13 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 		}
 	}
 
+	// 动态规划计算路径数量
 	for i := 1; i < m; i++ {
 		for j := 1; j < n; j++ {
 			if obstacleGrid[i][j] == 1 {
 				dp[i][j] = 0
 			} else {
 				dp[i][j] = dp[i][j-1] + dp[i-1][j]
-
 			}
 		}
 	}

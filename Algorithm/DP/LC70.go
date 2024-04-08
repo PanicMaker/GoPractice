@@ -1,6 +1,7 @@
-package main
+package DP
 
-import "fmt"
+// 70. 爬楼梯
+// https://leetcode.cn/problems/climbing-stairs/description/
 
 func climbStairs1(n int) int {
 	if n == 1 {
@@ -16,6 +17,10 @@ func climbStairs1(n int) int {
 }
 
 func climbStairs2(n int) int {
+	if n == 1 {
+		return 1
+	}
+
 	prev := 1
 	cur := 2
 	for i := 3; i <= n; i++ {
@@ -24,8 +29,4 @@ func climbStairs2(n int) int {
 		prev = temp
 	}
 	return cur
-}
-
-func main() {
-	fmt.Println(climbStairs2(3))
 }
