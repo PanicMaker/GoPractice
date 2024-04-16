@@ -1,5 +1,8 @@
 package DP
 
+// 198. 打家劫舍
+// https://leetcode.cn/problems/house-robber/
+
 func rob1(nums []int) int {
 	n := len(nums)
 
@@ -12,6 +15,7 @@ func rob1(nums []int) int {
 	dp[1] = max(nums[0], nums[1])
 
 	for i := 2; i < n; i++ {
+		// 当前房屋要不要偷
 		dp[i] = max(dp[i-1], dp[i-2]+nums[i])
 	}
 
