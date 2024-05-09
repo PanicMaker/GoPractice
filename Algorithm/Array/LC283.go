@@ -1,4 +1,4 @@
-package LinkedList
+package Array
 
 // 283. 移动零
 // https://leetcode.cn/problems/move-zeroes/description/

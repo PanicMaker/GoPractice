@@ -1,4 +1,4 @@
-package LinkedList
+package Array
 
 // 27. 移除元素
 // https://leetcode.cn/problems/remove-element/description/
