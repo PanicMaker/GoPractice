@@ -24,9 +24,19 @@ func climbStairs2(n int) int {
 	prev := 1
 	cur := 2
 	for i := 3; i <= n; i++ {
-		temp := cur
-		cur = prev + cur
-		prev = temp
+		cur, prev = prev+cur, cur
 	}
 	return cur
+}
+
+// 用递归的方式解决
+func climbStairs3(n int) int {
+	if n == 1 {
+		return 1
+	}
+	if n == 2 {
+		return 2
+	}
+
+	return climbStairs3(n-1) + climbStairs3(n-2)
 }
