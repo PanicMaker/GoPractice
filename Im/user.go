@@ -34,7 +34,10 @@ func NewUser(conn net.Conn, server *Server) *User {
 
 func (u *User) ListenMsg() {
 	for {
-		msg := <-u.C
+		msg, ok := <-u.C
+		if !ok {
+			return
+		}
 
 		u.conn.Write([]byte(msg + "\n"))
 	}
