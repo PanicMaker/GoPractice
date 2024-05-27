@@ -21,6 +21,7 @@ func NewClient(ip string, port int) (*Client, error) {
 	client := &Client{
 		ServerIp:   ip,
 		ServerPort: port,
+		flag:       999,
 	}
 
 	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", ip, port))
@@ -65,14 +66,77 @@ func (c *Client) Run() {
 
 		switch c.flag {
 		case 1:
+			c.PublicChat()
 			break
 		case 2:
+			c.PrivateChat()
 			break
 		case 3:
 			c.UpdateName()
 			break
 		}
 	}
+}
+
+func (c *Client) PublicChat() {
+	var chatMsg string
+	fmt.Println("Please input content, exit quit")
+	fmt.Scanln(&chatMsg)
+
+	for chatMsg != "exit" {
+		if len(chatMsg) != 0 {
+			sendMsg := chatMsg + "\n"
+			_, err := c.conn.Write([]byte(sendMsg))
+			if err != nil {
+				fmt.Println("conn Write err:", err)
+				break
+			}
+		}
+
+		chatMsg = ""
+		fmt.Println("Please input content")
+		fmt.Scanln(&chatMsg)
+	}
+}
+
+func (c *Client) SelectUsers() {
+	sendMsg := "who\n"
+	_, err := c.conn.Write([]byte(sendMsg))
+	if err != nil {
+		fmt.Println("conn write err:", err)
+		return
+	}
+}
+
+func (c *Client) PrivateChat() {
+	var remoteName string
+	var chatMsg string
+
+	c.SelectUsers()
+	fmt.Println("Please input username, exit quit")
+	fmt.Scanln(&remoteName)
+
+	for remoteName != "exit" {
+		fmt.Println("Please input content, exit quit")
+		fmt.Scanln(&chatMsg)
+
+		if len(chatMsg) != 0 {
+			sendMsg := "to|" + remoteName + "|" + chatMsg + "\n"
+			_, err := c.conn.Write([]byte(sendMsg))
+			if err != nil {
+				fmt.Println("conn Write err:", err)
+				break
+			}
+		}
+
+		chatMsg = ""
+		fmt.Println("Please input content, exit quit")
+		fmt.Scanln(&chatMsg)
+	}
+
+	c.SelectUsers()
+	fmt.Println("Please input username, exit quit")
+	fmt.Scanln(&remoteName)
 }
 
 func (c *Client) UpdateName() bool {
