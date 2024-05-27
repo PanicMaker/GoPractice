@@ -87,7 +87,7 @@ func (s *Server) Handler(conn net.Conn) {
 		case <-isAlive:
 			// 更新下方的定时器
 
-		case <-time.After(10 * time.Second):
+		case <-time.After(60 * time.Second):
 			// 超时后将用户剔除下线
 
 			user.SendMsg("你被踢了")
