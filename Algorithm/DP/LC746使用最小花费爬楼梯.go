@@ -1,6 +1,6 @@
-package main
+package DP
 
-import "fmt"
+// https://leetcode.cn/problems/min-cost-climbing-stairs/description/
 
 func minCostClimbingStairs(cost []int) int {
 	n := len(cost)
@@ -16,11 +16,4 @@ func minCostClimbingStairs(cost []int) int {
 	}
 
 	return dp[n]
-}
-
-func main() {
-	cost1 := []int{10, 15, 20}
-	fmt.Println(minCostClimbingStairs(cost1))
-	cost2 := []int{1, 100, 1, 1, 1, 100, 1, 1, 100, 1}
-	fmt.Println(minCostClimbingStairs(cost2))
 }

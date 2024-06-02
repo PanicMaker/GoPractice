@@ -1,6 +1,6 @@
-package main
+package DP
 
-import "fmt"
+// https://leetcode.cn/problems/n-th-tribonacci-number/description
 
 func tribonacci1(n int) int {
 	if n == 0 {
@@ -25,8 +25,4 @@ func tribonacci1(n int) int {
 	}
 
 	return dp[n]
-}
-
-func main() {
-	fmt.Println(tribonacci1(25))
 }

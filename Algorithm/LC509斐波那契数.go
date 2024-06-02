@@ -1,6 +1,6 @@
 package main
 
-import "fmt"
+// https://leetcode.cn/problems/fibonacci-number/description
 
 func fib(n int) int {
 	prev := 0
@@ -13,8 +13,4 @@ func fib(n int) int {
 	}
 
 	return cur
-}
-
-func main() {
-	fmt.Println(fib(6))
 }
