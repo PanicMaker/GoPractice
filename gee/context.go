@@ -10,8 +10,8 @@ type H map[string]any
 
 type Context struct {
 	// origin objects
-	Writer http.ResponseWriter
-	Req    *http.Request
+	ResWriter http.ResponseWriter
+	Req       *http.Request
 
 	// request info
 	Path   string
@@ -24,10 +24,10 @@ type Context struct {
 
 func newContext(w http.ResponseWriter, r *http.Request) *Context {
 	return &Context{
-		Writer: w,
-		Req:    r,
-		Path:   r.URL.Path,
-		Method: r.Method,
+		ResWriter: w,
+		Req:       r,
+		Path:      r.URL.Path,
+		Method:    r.Method,
 	}
 }
 
@@ -46,35 +46,35 @@ func (c *Context) Query(key string) string {
 
 func (c *Context) Status(code int) {
 	c.StatusCode = code
-	c.Writer.WriteHeader(code)
+	c.ResWriter.WriteHeader(code)
 }
 
 func (c *Context) SetHeader(key string, value string) {
-	c.Writer.Header().Set(key, value)
+	c.ResWriter.Header().Set(key, value)
 }
 
 func (c *Context) String(code int, format string, values ...any) {
 	c.SetHeader("Content-Type", "text/plain")
 	c.Status(code)
-	c.Writer.Write([]byte(fmt.Sprintf(format, values...)))
+	c.ResWriter.Write([]byte(fmt.Sprintf(format, values...)))
 }
 
 func (c *Context) JSON(code int, obj any) {
 	c.SetHeader("Content-Type", "application/json")
 	c.Status(code)
-	encoder := json.NewEncoder(c.Writer)
+	encoder := json.NewEncoder(c.ResWriter)
 	if err := encoder.Encode(obj); err != nil {
-		http.Error(c.Writer, err.Error(), 500)
+		http.Error(c.ResWriter, err.Error(), 500)
 	}
 }
 
 func (c *Context) Data(code int, data []byte) {
 	c.Status(code)
-	c.Writer.Write(data)
+	c.ResWriter.Write(data)
 }
 
 func (c *Context) HTML(code int, html string) {
 	c.SetHeader("Content-Type", "text/html")
 	c.Status(code)
-	c.Writer.Write([]byte(html))
+	c.ResWriter.Write([]byte(html))
 }

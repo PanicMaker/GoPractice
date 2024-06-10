@@ -17,6 +17,7 @@ func newRouter() *router {
 	}
 }
 
+// 解析 path
 func parsePattern(pattern string) []string {
 	vs := strings.Split(pattern, "/")
 
@@ -24,6 +25,7 @@ func parsePattern(pattern string) []string {
 	for _, item := range vs {
 		if item != "" {
 			parts = append(parts, item)
+			// Only one * is allowed
 			if item[0] == '*' {
 				break
 			}
