@@ -32,14 +32,13 @@ func FormatAsDate(t time.Time) string {
 }
 
 func main() {
-	r := gee.New()
+	r := gee.Default()
 
-	r.Use(gee.Logger()) // global midlleware
 	r.SetFuncMap(template.FuncMap{
 		"FormatAsDate": FormatAsDate,
 	})
 
-	r.LoadHTMLGlob("/Users/her/Code/Go/GoPractice/gee/templates/*")
+	//r.LoadHTMLGlob("/Users/her/Code/Go/GoPractice/gee/templates/*")
 	r.Static("/assets", "./static")
 
 	v1 := r.Group("/v1")
@@ -72,6 +71,11 @@ func main() {
 
 	r.GET("/", func(c *gee.Context) {
 		c.HTML(http.StatusOK, "css.tmpl", nil)
+	})
+
+	r.GET("/panic", func(c *gee.Context) {
+		names := []string{"geek"}
+		c.String(http.StatusOK, names[4])
 	})
 
 	r.Run(":9999")
