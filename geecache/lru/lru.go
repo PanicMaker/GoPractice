@@ -21,12 +21,12 @@ type Value interface {
 	Len() int
 }
 
-func New(maxBytes int64, onEnvicted func(string, Value)) *Cache {
+func New(maxBytes int64, onEvicted func(string, Value)) *Cache {
 	return &Cache{
 		maxBytes:  maxBytes,
 		list:      list.New(),
 		cache:     make(map[string]*list.Element),
-		OnEvicted: onEnvicted,
+		OnEvicted: onEvicted,
 	}
 }
 
@@ -75,7 +75,7 @@ func (c *Cache) Add(key string, value Value) {
 		c.nBytes += int64(len(key)) + int64(value.Len())
 	}
 
-	//超过最大容量，移除最近最少访问节点
+	// 超过最大容量，移除最近最少访问节点
 	for c.maxBytes != 0 && c.maxBytes < c.nBytes {
 		c.RemoveOldest()
 	}
