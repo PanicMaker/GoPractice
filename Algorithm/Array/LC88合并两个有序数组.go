@@ -1,9 +1,11 @@
 package Array
 
+import "sort"
+
 // https://leetcode.cn/problems/merge-sorted-array/description/
 
-// 时间复杂度 O(M+N)
-func merge(nums1 []int, m int, nums2 []int, n int) {
+// 双指针，时间复杂度 O(M+N)
+func merge1(nums1 []int, m int, nums2 []int, n int) {
 	i, j, k := m-1, n-1, m+n-1
 
 	for j >= 0 {
@@ -16,4 +18,10 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 		}
 		k--
 	}
+}
+
+// 和并后排序
+func merge2(nums1 []int, m int, nums2 []int, n int) {
+	copy(nums1[m:], nums2)
+	sort.Ints(nums1)
 }

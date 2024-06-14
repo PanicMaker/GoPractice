@@ -23,7 +23,7 @@ func TestLC88(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			merge(tt.args.nums1, tt.args.m, tt.args.nums2, tt.args.n)
+			merge2(tt.args.nums1, tt.args.m, tt.args.nums2, tt.args.n)
 			if got := tt.args.nums1; !reflect.DeepEqual(got, tt.expect) {
 				t.Errorf("After merge %v, expect %v", got, tt.expect)
 			}
