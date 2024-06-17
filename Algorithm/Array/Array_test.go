@@ -54,3 +54,24 @@ func TestLC80(t *testing.T) {
 		})
 	}
 }
+
+func TestLC169(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	var tests = []struct {
+		name   string
+		args   args
+		expect int
+	}{
+		{"1", args{[]int{3, 2, 3}}, 3},
+		{"2", args{[]int{2, 2, 1, 1, 1, 2, 2}}, 2},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := majorityElementIII(tt.args.nums); !reflect.DeepEqual(got, tt.expect) {
+				t.Errorf("majorityElement() = %v, expect %v", got, tt.expect)
+			}
+		})
+	}
+}
