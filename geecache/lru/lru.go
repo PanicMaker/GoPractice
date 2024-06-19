@@ -66,7 +66,7 @@ func (c *Cache) Add(key string, value Value) {
 		c.nBytes += int64(value.Len()) - int64(kv.value.Len())
 		kv.value = value
 	} else {
-		// 不存在则新增节点并放在队首
+		// 不存在则新增节点并放在队尾
 		element := c.list.PushBack(&entry{
 			key:   key,
 			value: value,

@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const defaultBasePath = "_geecache"
+const defaultBasePath = "/_geecache/"
 
 type HTTPPool struct {
 	// peer's base URL
