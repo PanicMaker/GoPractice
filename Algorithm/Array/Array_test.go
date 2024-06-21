@@ -91,7 +91,7 @@ func TestLC189(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			rotateI(tt.args.nums, tt.args.k)
+			rotateIII(tt.args.nums, tt.args.k)
 			if !reflect.DeepEqual(tt.args.nums, tt.expect) {
 				t.Errorf("rotateI() = %v, expect %v", tt.args.nums, tt.expect)
 			}
