@@ -19,8 +19,11 @@ func (f GetterFunc) Get(key string) ([]byte, error) {
 	return f(key)
 }
 
+// Group 负责缓存值的存储与获取
 type Group struct {
-	name      string
+	name string
+
+	// 缓存未命中时的获取源数据的回调
 	getter    Getter
 	mainCache cache
 	peers     PeerPicker
@@ -66,6 +69,7 @@ func (g *Group) RegisterPeers(peers PeerPicker) {
 	g.peers = peers
 }
 
+// Get 从 cache 中获取数据
 func (g *Group) Get(key string) (ByteView, error) {
 	if key == "" {
 		return ByteView{}, fmt.Errorf("key is required")
@@ -76,10 +80,12 @@ func (g *Group) Get(key string) (ByteView, error) {
 		return v, nil
 	}
 
+	// 缓存不存在调用，加载数据
 	return g.load(key)
 }
 
 func (g *Group) load(key string) (value ByteView, err error) {
+	// 远程节点不为空时调用
 	if g.peers != nil {
 		if peer, ok := g.peers.PickPeer(key); ok {
 			if value, err = g.getFromPeer(peer, key); err != nil {
@@ -103,6 +109,7 @@ func (g *Group) getLocally(key string) (ByteView, error) {
 	return value, nil
 }
 
+// 从远程节点获取数据
 func (g *Group) getFromPeer(peer PeerGetter, key string) (ByteView, error) {
 	bytes, err := peer.Get(g.name, key)
 	if err != nil {
@@ -112,6 +119,7 @@ func (g *Group) getFromPeer(peer PeerGetter, key string) (ByteView, error) {
 	return ByteView{b: bytes}, err
 }
 
+// 将数据加入缓存中
 func (g *Group) populateCache(key string, value ByteView) {
 	g.mainCache.add(key, value)
 }

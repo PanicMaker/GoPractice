@@ -9,16 +9,16 @@ import (
 // Hash Map bytes to uint32
 type Hash func(data []byte) uint32
 
-// Map contains all hashed keys
-type Map struct {
+// NodeMap contains all hashed keys
+type NodeMap struct {
 	hash     Hash
 	replicas int            // 虚拟节点倍数
 	keys     []int          // 哈希环
 	hashMap  map[int]string // 虚拟节点与真实节点的映射表
 }
 
-func New(replicas int, fn Hash) *Map {
-	m := &Map{
+func New(replicas int, fn Hash) *NodeMap {
+	m := &NodeMap{
 		hash:     fn,
 		replicas: replicas,
 		hashMap:  make(map[int]string),
@@ -32,7 +32,7 @@ func New(replicas int, fn Hash) *Map {
 }
 
 // Add adds some keys to the hash
-func (m *Map) Add(keys ...string) {
+func (m *NodeMap) Add(keys ...string) {
 	for _, key := range keys {
 		for i := 0; i < m.replicas; i++ {
 			// 计算虚拟节点的hash值
@@ -47,7 +47,7 @@ func (m *Map) Add(keys ...string) {
 	sort.Ints(m.keys)
 }
 
-func (m *Map) Get(key string) string {
+func (m *NodeMap) Get(key string) string {
 	if len(m.keys) == 0 {
 		return ""
 	}

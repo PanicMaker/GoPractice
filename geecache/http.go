@@ -22,7 +22,7 @@ type HTTPPool struct {
 	addr        string
 	basePath    string
 	mu          sync.Mutex
-	peers       *consistenthash.Map
+	peers       *consistenthash.NodeMap
 	httpGetters map[string]*httpGetter
 }
 
@@ -42,6 +42,7 @@ func (p *HTTPPool) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		panic("HTTPPool serving unexpected path: " + r.URL.Path)
 	}
 	p.Log("%s %s", r.Method, r.URL.Path)
+	// /<basepath>/<groupname>/<key> required
 	parts := strings.SplitN(r.URL.Path[len(p.basePath):], "/", 2)
 	if len(parts) != 2 {
 		http.Error(w, "bad request", http.StatusBadRequest)
@@ -80,6 +81,7 @@ func (p *HTTPPool) Set(peers ...string) {
 	}
 }
 
+// PickPeer 根据 key 选择对应的节点
 func (p *HTTPPool) PickPeer(key string) (PeerGetter, bool) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
@@ -97,6 +99,7 @@ type httpGetter struct {
 }
 
 func (g *httpGetter) Get(group string, key string) ([]byte, error) {
+	// 拼接 key 所在远程节点的 url
 	u := fmt.Sprintf("%v%v/%v", g.baseURl, url.QueryEscape(group), url.QueryEscape(key))
 
 	res, err := http.Get(u)
