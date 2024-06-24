@@ -22,9 +22,41 @@ func TestLC13(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := romanToIntII(tt.args.s); got != tt.want {
-				t.Errorf("romanToInt() = %v, want %v", got, tt.want)
+			if got := romanToIntI(tt.args.s); got != tt.want {
+				t.Errorf("romanToIntI() = %v, want %v", got, tt.want)
 			}
 		})
 	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := romanToIntII(tt.args.s); got != tt.want {
+				t.Errorf("romanToIntII() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestLC58(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"1", args{s: "Hello World"}, 5},
+		{"2", args{s: "   fly me   to   the moon  "}, 4},
+		{"3", args{s: "luffy is still joyboy"}, 6},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := lengthOfLastWordII(tt.args.s); got != tt.want {
+				t.Errorf("lengthOfLastWord() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+
 }
