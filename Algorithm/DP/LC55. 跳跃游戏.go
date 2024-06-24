@@ -52,3 +52,20 @@ func canJumpIII(nums []int) bool {
 
 	return jumpHighest >= len(nums)-1
 }
+
+// 通过贪心算法，时间复杂度为𝑂(𝑛)
+func canJumpIV(nums []int) bool {
+	n := len(nums)
+	// 用于记录能够到达的最远位置
+	farthest := 0
+
+	for i := 0; i < n; i++ {
+		// 如果当前索引 i 超过了 farthest，则返回 false，表示不能到达位置 i
+		if i > farthest {
+			return false
+		}
+		farthest = max(farthest, i+nums[i])
+	}
+
+	return true
+}
