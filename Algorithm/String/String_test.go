@@ -53,7 +53,7 @@ func TestLC58(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := lengthOfLastWordII(tt.args.s); got != tt.want {
+			if got := lengthOfLastWordIII(tt.args.s); got != tt.want {
 				t.Errorf("lengthOfLastWord() = %v, want %v", got, tt.want)
 			}
 		})

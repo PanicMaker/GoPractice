@@ -20,3 +20,24 @@ func lengthOfLastWordII(s string) int {
 
 	return len(strs[len(strs)-1])
 }
+
+// 用指针找到一个第一个不为空的字符，并开始计算长度
+func lengthOfLastWordIII(s string) int {
+	n := len(s)
+	end := n - 1
+
+	for s[end] == ' ' {
+		end--
+	}
+
+	ans := 0
+	for s[end] != ' ' {
+		ans++
+		end--
+		if end < 0 {
+			break
+		}
+	}
+
+	return ans
+}
