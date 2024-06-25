@@ -142,3 +142,25 @@ func TestLC238(t *testing.T) {
 		})
 	}
 }
+
+func TestLC134(t *testing.T) {
+	type args struct {
+		gas  []int
+		cost []int
+	}
+	var tests = []struct {
+		name   string
+		args   args
+		expect int
+	}{
+		{"1", args{[]int{1, 2, 3, 4, 5}, []int{3, 4, 5, 1, 2}}, 3},
+		{"2", args{[]int{2, 3, 4}, []int{3, 4, 3}}, -1},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := canCompleteCircuit(tt.args.gas, tt.args.cost); !reflect.DeepEqual(got, tt.expect) {
+				t.Errorf("v() = %v, expect %v", got, tt.expect)
+			}
+		})
+	}
+}
