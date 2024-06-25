@@ -37,6 +37,30 @@ func TestLC13(t *testing.T) {
 	}
 }
 
+func TestLC14(t *testing.T) {
+	type args struct {
+		strs []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{"1", args{strs: []string{"flower", "flow", "flight"}}, "fl"},
+		{"2", args{strs: []string{"dog", "racecar", "car"}}, ""},
+		{"3", args{strs: []string{"ab", "a"}}, "a"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := longestCommonPrefixII(tt.args.strs); got != tt.want {
+				t.Errorf("longestCommonPrefixII() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+
+}
+
 func TestLC58(t *testing.T) {
 	type args struct {
 		s string
