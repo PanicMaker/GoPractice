@@ -84,3 +84,27 @@ func TestLC58(t *testing.T) {
 	}
 
 }
+
+func TestLC125(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"1", args{s: "A man, a plan, a canal: Panama"}, true},
+		{"2", args{s: "race a car"}, false},
+		{"3", args{s: " "}, true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := isPalindrome(tt.args.s); got != tt.want {
+				t.Errorf("isPalindrome() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+
+}
