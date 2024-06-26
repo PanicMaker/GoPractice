@@ -108,3 +108,29 @@ func TestLC125(t *testing.T) {
 	}
 
 }
+
+func TestLC392(t *testing.T) {
+	type args struct {
+		s string
+		t string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"1", args{s: "abc", t: "ahbgdc"}, true},
+		{"2", args{s: "axc", t: "ahbgdc"}, false},
+		{"3", args{s: "acb", t: "ahbgdc"}, false},
+		{"4", args{s: "bb", t: "ahbgdc"}, false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := isSubsequenceIII(tt.args.s, tt.args.t); got != tt.want {
+				t.Errorf("isSubsequence() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+
+}
