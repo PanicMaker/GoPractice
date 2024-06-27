@@ -5,6 +5,28 @@ import (
 	"testing"
 )
 
+func TestLC15(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	var tests = []struct {
+		name   string
+		args   args
+		expect [][]int
+	}{
+		{"1", args{[]int{-1, 0, 1, 2, -1, -4}}, [][]int{[]int{-1, -1, 2}, []int{-1, 0, 1}}},
+		{"2", args{[]int{0, 1, 1}}, [][]int{}},
+		{"3", args{[]int{0, 0, 0}}, [][]int{[]int{0, 0, 0}}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := threeSumII(tt.args.nums); !reflect.DeepEqual(got, tt.expect) {
+				t.Errorf("threeSum() = %v, expect %v", got, tt.expect)
+			}
+		})
+	}
+}
+
 func TestLC88(t *testing.T) {
 	type args struct {
 		nums1 []int

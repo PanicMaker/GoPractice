@@ -1,4 +1,4 @@
-package main
+package Array
 
 // https://leetcode.cn/problems/two-sum/description/
 
