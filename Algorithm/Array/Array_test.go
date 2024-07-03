@@ -207,3 +207,26 @@ func TestLC228(t *testing.T) {
 		})
 	}
 }
+
+func TestLC209(t *testing.T) {
+	type args struct {
+		target int
+		nums   []int
+	}
+	var tests = []struct {
+		name   string
+		args   args
+		expect int
+	}{
+		{"1", args{7, []int{2, 3, 1, 2, 4, 3}}, 2},
+		{"2", args{4, []int{1, 4, 4}}, 1},
+		{"3", args{11, []int{1, 1, 1, 1, 1, 1, 1, 1}}, 0},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := minSubArrayLen(tt.args.target, tt.args.nums); !reflect.DeepEqual(got, tt.expect) {
+				t.Errorf("minSubArrayLen() = %v, expect %v", got, tt.expect)
+			}
+		})
+	}
+}
