@@ -14,9 +14,9 @@ func TestLC15(t *testing.T) {
 		args   args
 		expect [][]int
 	}{
-		{"1", args{[]int{-1, 0, 1, 2, -1, -4}}, [][]int{[]int{-1, -1, 2}, []int{-1, 0, 1}}},
+		{"1", args{[]int{-1, 0, 1, 2, -1, -4}}, [][]int{{-1, -1, 2}, {-1, 0, 1}}},
 		{"2", args{[]int{0, 1, 1}}, [][]int{}},
-		{"3", args{[]int{0, 0, 0}}, [][]int{[]int{0, 0, 0}}},
+		{"3", args{[]int{0, 0, 0}}, [][]int{{0, 0, 0}}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -203,6 +203,29 @@ func TestLC228(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := summaryRanges(tt.args.nums); !reflect.DeepEqual(got, tt.expect) {
 				t.Errorf("summaryRanges() = %v, expect %v", got, tt.expect)
+			}
+		})
+	}
+}
+
+func TestLC209(t *testing.T) {
+	type args struct {
+		target int
+		nums   []int
+	}
+	var tests = []struct {
+		name   string
+		args   args
+		expect int
+	}{
+		{"1", args{7, []int{2, 3, 1, 2, 4, 3}}, 2},
+		{"2", args{4, []int{1, 4, 4}}, 1},
+		{"3", args{11, []int{1, 1, 1, 1, 1, 1, 1, 1}}, 0},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := minSubArrayLen(tt.args.target, tt.args.nums); !reflect.DeepEqual(got, tt.expect) {
+				t.Errorf("minSubArrayLen() = %v, expect %v", got, tt.expect)
 			}
 		})
 	}
