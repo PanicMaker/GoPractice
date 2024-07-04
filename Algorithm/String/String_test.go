@@ -1,6 +1,7 @@
 package String
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -178,6 +179,31 @@ func TestLC567(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := checkInclusion(tt.args.s1, tt.args.s2); got != tt.want {
 				t.Errorf("checkInclusion() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+
+}
+
+func TestLC30(t *testing.T) {
+	type args struct {
+		s     string
+		words []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"1", args{s: "barfoothefoobarman", words: []string{"foo", "bar"}}, []int{0, 9}},
+		{"2", args{s: "wordgoodgoodgoodbestword", words: []string{"word", "good", "best", "word"}}, []int{}},
+		{"3", args{s: "barfoofoobarthefoobarman", words: []string{"bar", "foo", "the"}}, []int{6, 9, 12}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := findSubstring(tt.args.s, tt.args.words); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("findSubstring() = %v, want %v", got, tt.want)
 			}
 		})
 	}
