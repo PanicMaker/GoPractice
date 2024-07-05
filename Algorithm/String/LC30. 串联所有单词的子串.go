@@ -4,7 +4,6 @@ package String
 
 func findSubstring(s string, words []string) []int {
 	need := make(map[string]int)
-	window := make(map[string]int)
 
 	for _, v := range words {
 		need[v]++
@@ -15,37 +14,40 @@ func findSubstring(s string, words []string) []int {
 	n := len(words)
 	wordLength := len(words[0])
 
-	left, right := 0, wordLength
-	valid := 0
-
 	if len(s) < n*wordLength {
 		return res
 	}
 
-	for right < len(s) {
-		str := s[right-wordLength : right]
+	for i := 0; i < wordLength; i++ {
+		window := make(map[string]int)
+		left, right := i, i
+		valid := 0
 
-		if _, ok := need[str]; ok {
+		for right+wordLength <= len(s) { // 保证窗口不会越界
+			str := s[right : right+wordLength]
 			right += wordLength
-			window[str]++
-			if window[str] == need[str] {
-				valid++
-			}
-		} else {
-			right++
-		}
 
-		for right-left >= n*wordLength && left < len(s)-n*wordLength {
-			if valid == len(words) {
-				res = append(res, left)
-			}
-
-			d := s[left : left+wordLength]
-			if _, ok := need[d]; ok {
-				if window[d] == need[d] {
-					valid--
+			if count, ok := need[str]; ok {
+				window[str]++
+				if window[str] == count {
+					valid++
 				}
-				window[d]--
+			}
+
+			for right-left == n*wordLength { // 窗口长度等于所有单词的总长度
+				if valid == len(need) {
+					res = append(res, left)
+				}
+
+				d := s[left : left+wordLength]
+				left += wordLength
+
+				if count, ok := need[d]; ok {
+					if window[d] == count {
+						valid--
+					}
+					window[d]--
+				}
 			}
 		}
 	}

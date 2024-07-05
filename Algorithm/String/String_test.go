@@ -198,6 +198,8 @@ func TestLC30(t *testing.T) {
 		{"1", args{s: "barfoothefoobarman", words: []string{"foo", "bar"}}, []int{0, 9}},
 		{"2", args{s: "wordgoodgoodgoodbestword", words: []string{"word", "good", "best", "word"}}, []int{}},
 		{"3", args{s: "barfoofoobarthefoobarman", words: []string{"bar", "foo", "the"}}, []int{6, 9, 12}},
+		{"4", args{s: "wordgoodgoodgoodbestword", words: []string{"word", "good", "best", "good"}}, []int{8}},
+		{"5", args{s: "lingmindraboofooowingdingbarrwingmonkeypoundcake", words: []string{"fooo", "barr", "wing", "ding", "wing"}}, []int{13}},
 	}
 
 	for _, tt := range tests {
