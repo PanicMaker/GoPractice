@@ -33,7 +33,7 @@ func isPalindromeI(s string) bool {
 	return true
 }
 
-func isPalindrome(s string) bool {
+func isPalindromeII(s string) bool {
 	n := len(s)
 	if n == 0 {
 		return true

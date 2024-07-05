@@ -1,8 +1,9 @@
-package main
+package String
 
 // 344. 反转字符串
 // https://leetcode.cn/problems/reverse-string/description/
 
+// 双指针
 func reverseString(s []byte) {
 	l, r := 0, len(s)-1
 

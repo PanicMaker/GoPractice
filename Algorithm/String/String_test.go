@@ -102,7 +102,7 @@ func TestLC125(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := isPalindrome(tt.args.s); got != tt.want {
+			if got := isPalindromeII(tt.args.s); got != tt.want {
 				t.Errorf("isPalindrome() = %v, want %v", got, tt.want)
 			}
 		})
@@ -128,7 +128,7 @@ func TestLC392(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := isSubsequenceIII(tt.args.s, tt.args.t); got != tt.want {
+			if got := isSubsequenceI(tt.args.s, tt.args.t); got != tt.want {
 				t.Errorf("isSubsequence() = %v, want %v", got, tt.want)
 			}
 		})

@@ -1,4 +1,4 @@
-package main
+package Array
 
 // 1470. 重新排列数组
 // https://leetcode.cn/problems/shuffle-the-array/description/
