@@ -1,5 +1,7 @@
 package String
 
+// https://leetcode.cn/problems/isomorphic-strings/description/
+
 import (
 	"reflect"
 	"strings"
