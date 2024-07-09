@@ -230,3 +230,25 @@ func TestLC209(t *testing.T) {
 		})
 	}
 }
+
+func TestLC11(t *testing.T) {
+	type args struct {
+		height []int
+	}
+	var tests = []struct {
+		name   string
+		args   args
+		expect int
+	}{
+		{"1", args{[]int{1, 8, 6, 2, 5, 4, 8, 3, 7}}, 49},
+		{"2", args{[]int{1, 1}}, 1},
+		{"3", args{[]int{4, 3, 2, 1, 4}}, 16},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := maxAreaII(tt.args.height); !reflect.DeepEqual(got, tt.expect) {
+				t.Errorf("maxArea() = %v, expect %v", got, tt.expect)
+			}
+		})
+	}
+}
