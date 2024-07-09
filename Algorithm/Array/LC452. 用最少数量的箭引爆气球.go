@@ -5,29 +5,26 @@ package Array
 import "sort"
 
 func findMinArrowShots(points [][]int) int {
-	if len(points) <= 1 {
-		return len(points)
+	if len(points) == 0 {
+		return 0
 	}
 
+	// 按照每个气球的右边界进行排序
 	sort.Slice(points, func(i, j int) bool {
-		return points[i][0] < points[j][0]
+		return points[i][1] < points[j][1]
 	})
 
-	merged := make([][]int, 0)
-	merged = append(merged, points[0])
+	count := 1
+	index := points[0][1]
 
-	for i := 1; i < len(points); i++ {
-		current := points[i]
-		last := merged[len(merged)-1]
-
-		if current[0] > last[1] {
-			merged = append(merged, current)
-		} else {
-			// 更新 last 区间的结束位置为 last 和 current 的结束位置的较大值
-			last[1] = max(last[1], current[1])
-			merged[len(merged)-1] = last
+	for i := 0; i < len(points); i++ {
+		// 如果当前气球的左边界大于当前箭的射击位置，需要增加一支箭
+		if points[i][0] > index {
+			count++
+			index = points[i][1]
 		}
+
 	}
 
-	return len(merged)
+	return count
 }
