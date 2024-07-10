@@ -1,4 +1,4 @@
-package Array
+package HashMap
 
 // https://leetcode.cn/problems/two-sum/description/
 

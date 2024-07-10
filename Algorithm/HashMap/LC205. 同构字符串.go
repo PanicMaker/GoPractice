@@ -1,4 +1,4 @@
-package String
+package HashMap
 
 // https://leetcode.cn/problems/isomorphic-strings/description/
 

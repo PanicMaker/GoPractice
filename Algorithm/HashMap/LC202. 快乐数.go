@@ -1,4 +1,4 @@
-package main
+package HashMap
 
 // https://leetcode.cn/problems/happy-number/description/
 

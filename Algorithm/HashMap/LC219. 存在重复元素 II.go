@@ -1,4 +1,4 @@
-package Array
+package HashMap
 
 // https://leetcode.cn/problems/contains-duplicate-ii/
 
