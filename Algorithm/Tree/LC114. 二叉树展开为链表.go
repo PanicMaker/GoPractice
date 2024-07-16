@@ -2,7 +2,7 @@ package Tree
 
 // https://leetcode.cn/problems/flatten-binary-tree-to-linked-list
 
-func flatten(root *TreeNode) {
+func flattenI(root *TreeNode) {
 	var flattenTree func(node *TreeNode) *TreeNode
 
 	flattenTree = func(node *TreeNode) *TreeNode {
@@ -32,4 +32,23 @@ func flatten(root *TreeNode) {
 	}
 
 	flattenTree(root)
+}
+
+func flattenII(root *TreeNode) {
+	cur := root
+
+	for cur != nil {
+		if cur.Left == nil {
+			cur = cur.Right
+		} else {
+			tmp := cur.Left
+			for tmp.Right != nil {
+				tmp = tmp.Right
+			}
+			tmp.Right = cur.Right
+			cur.Right = cur.Left
+			cur.Left = nil
+			cur = cur.Right
+		}
+	}
 }
