@@ -31,3 +31,31 @@ func isPalindrome(head *ListNode) bool {
 
 	return true
 }
+
+func isPalindromeII(head *ListNode) bool {
+	left := head
+
+	is := true
+
+	var traverse func(right *ListNode)
+	traverse = func(right *ListNode) {
+		if right == nil {
+			return
+		}
+
+		// 利用递归，走到链表尾部
+		traverse(right.Next)
+
+		// 后序遍历位置，此时的right指针指向链表右侧尾部
+		// 所以可以和left指针比较，判断是否是回文链表
+		if left.Val != right.Val {
+			is = false
+		}
+
+		left = left.Next
+	}
+
+	traverse(head)
+
+	return is
+}
