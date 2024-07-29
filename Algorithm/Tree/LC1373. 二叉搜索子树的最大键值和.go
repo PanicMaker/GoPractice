@@ -4,29 +4,29 @@ import "math"
 
 // https://leetcode.cn/problems/maximum-sum-bst-in-binary-tree/description/
 
+// 时间复杂度O(n²)，测试用例会超时
 func maxSumBST(root *TreeNode) int {
 	res := 0
 	dict := make(map[*TreeNode]int)
 
-	var dfs func(node *TreeNode, sum int)
-	dfs = func(node *TreeNode, sum int) {
+	var dfs func(node *TreeNode) int
+	dfs = func(node *TreeNode) int {
 		if node == nil {
-			return
+			return 0
 		}
 
-		if !isBST(node) {
-			return
+		left := dfs(node.Left)
+		right := dfs(node.Right)
+
+		sum := node.Val + left + right
+
+		if isBST(node) {
+			dict[node] = sum
 		}
-
-		dfs(node.Left, sum)
-		dfs(node.Right, sum)
-
-		sum += node.Val
-
-		dict[node] = sum
+		return sum
 	}
 
-	dfs(root, 0)
+	dfs(root)
 
 	for _, v := range dict {
 		res = max(res, v)
