@@ -1,15 +1,8 @@
 package Tree
 
-// https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/description/
+// https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/description/
 
-type Node struct {
-	Val   int
-	Left  *Node
-	Right *Node
-	Next  *Node
-}
-
-func connect116(root *Node) *Node {
+func connect117(root *Node) *Node {
 	if root == nil {
 		return nil
 	}
