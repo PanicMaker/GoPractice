@@ -1,6 +1,5 @@
 package Tree
 
-// 104. 二叉树的最大深度
 // https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/
 
 // 通过二叉树遍历的方式求解

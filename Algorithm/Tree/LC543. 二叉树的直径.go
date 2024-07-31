@@ -1,6 +1,5 @@
 package Tree
 
-// 543. 二叉树的直径
 // https://leetcode.cn/problems/diameter-of-binary-tree/description/
 
 func diameterOfBinaryTree(root *TreeNode) int {
