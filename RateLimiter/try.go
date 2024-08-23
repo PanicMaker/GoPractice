@@ -3,7 +3,7 @@ package main
 import "time"
 import "fmt"
 
-func main() {
+func try() {
 
 	// 首先我们将看一下基本的速率限制。假设我们想限制我们
 	// 接收请求的处理，我们将这些请求发送给一个相同的通道。
