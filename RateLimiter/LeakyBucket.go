@@ -21,7 +21,7 @@ func NewLeakyBucketLimiter(capacity int, rate int) *LeakyBucketLimiter {
 	}
 }
 
-func (l *LeakyBucketLimiter) TryAcquire() bool {
+func (l *LeakyBucketLimiter) TryAcquire() (bool, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 
@@ -38,10 +38,10 @@ func (l *LeakyBucketLimiter) TryAcquire() bool {
 
 	// 若到达最高水位，请求失败
 	if l.current >= l.capacity {
-		return false
+		return false, nil
 	}
 
 	// 若没有到达最高水位，当前水位+1，请求成功
 	l.current++
-	return true
+	return true, nil
 }

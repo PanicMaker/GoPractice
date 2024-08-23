@@ -1,5 +1,5 @@
 package main
 
 type RateLimiter interface {
-	TryAcquire() bool
+	TryAcquire() (bool, error)
 }
