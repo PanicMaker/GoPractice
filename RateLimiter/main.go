@@ -25,7 +25,7 @@ func main() {
 	second := NewSlidingLogLimiterStrategy(1, 1*time.Second)
 	minute := NewSlidingLogLimiterStrategy(10, 1*time.Minute)
 
-	limiter, _ := NewSlidingLogLimiter(20, second, minute)
+	limiter, _ := NewSlidingLogLimiter(time.Second, second, minute)
 
 	r.Use(RateLimit(limiter))
 
