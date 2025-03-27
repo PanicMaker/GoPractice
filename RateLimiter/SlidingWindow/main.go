@@ -40,7 +40,7 @@ func (l *SlidingWindowLimiter) TryAcquire() bool {
 	// 获取当前小窗口值
 	currentSmallWindow := time.Now().UnixNano() / l.smallWindow * l.smallWindow
 	// 获取起始小窗口值
-	startSmallWindow := currentSmallWindow - l.smallWindows*(l.smallWindows-1)
+	startSmallWindow := currentSmallWindow - l.smallWindow*(l.smallWindows-1)
 
 	// 计算当前窗口的请求总数
 	var count int
