@@ -11,6 +11,7 @@ import (
 	"log"
 	"math/big"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -146,4 +147,45 @@ func generateCertForHost(host string) (tls.Certificate, error) {
 	}
 
 	return cert, nil
+}
+
+// 添加证书缓存
+var (
+	certCache     = make(map[string]tls.Certificate)
+	certCacheLock sync.RWMutex
+)
+
+// 伪造证书加载（使用缓存优化）
+func loadFakeCertificate(host string) tls.Certificate {
+	// 提取域名部分作为缓存键
+	domain := strings.Split(host, ":")[0]
+
+	// 先检查缓存中是否已有该域名的证书
+	certCacheLock.RLock()
+	cert, exists := certCache[domain]
+	certCacheLock.RUnlock()
+
+	if exists {
+		log.Printf("使用缓存的证书: %s", domain)
+		return cert
+	}
+
+	// 缓存中没有，需要生成新证书
+	log.Printf("为域名生成新证书: %s", domain)
+	cert, err := generateCertForHost(domain)
+	if err != nil {
+		log.Printf("为域名 %s 生成证书失败: %v", host, err)
+		// 使用默认证书作为后备方案
+		cert, err = tls.LoadX509KeyPair("server.crt", "server.key")
+		if err != nil {
+			log.Fatal("默认证书加载失败:", err)
+		}
+	}
+
+	// 将新生成的证书添加到缓存
+	certCacheLock.Lock()
+	certCache[domain] = cert
+	certCacheLock.Unlock()
+
+	return cert
 }

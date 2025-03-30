@@ -47,6 +47,13 @@ func handleClient(clientConn net.Conn) {
 		return
 	}
 
+	// 向客户端发送200 Connection Established
+	_, err = clientConn.Write([]byte("HTTP/1.1 200 Connection Established\r\n\r\n"))
+	if err != nil {
+		log.Println("发送Connection Established失败:", err)
+		return
+	}
+
 	// 3. 连接到真实目标服务器
 	log.Printf("正在连接目标服务器: %s", targetHost)
 	targetConn, err := tls.Dial("tcp", targetHost, &tls.Config{
@@ -68,7 +75,9 @@ func handleClient(clientConn net.Conn) {
 	clientTLS := tls.Server(clientConn, clientTLSConfig)
 	err = clientTLS.Handshake()
 	if err != nil {
-		log.Println("TLS握手失败:", err)
+		log.Printf("TLS握手失败: %v (目标: %s)", err, targetHost)
+		// 添加更多调试信息
+		log.Printf("TLS配置: 证书数量=%d", len(clientTLSConfig.Certificates))
 		return
 	}
 	defer clientTLS.Close()
@@ -78,15 +87,7 @@ func handleClient(clientConn net.Conn) {
 	io.Copy(clientTLS, targetConn)
 }
 
-// 伪造证书加载（示例需替换为动态生成逻辑）
-func loadFakeCertificate(host string) tls.Certificate {
-	// 实际需调用代码生成或读取预先生成的证书
-	cert, err := generateCertForHost(host)
-	if err != nil {
-		log.Fatal("证书加载失败:", err)
-	}
-	return cert
-}
+
 
 // 从CONNECT请求中提取目标域名
 func extractHostFromCONNECT(request string) (string, error) {
