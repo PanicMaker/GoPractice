@@ -2,6 +2,7 @@ package main
 
 import (
 	"io"
+	"log/slog"
 	"testing"
 	"time"
 
@@ -41,6 +42,20 @@ func BenchmarkZap(b *testing.B) {
 			zap.String("url", `http://foo.com`),
 			zap.Int("attempt", 3),
 			zap.Duration("backoff", time.Second),
+		)
+	}
+}
+
+func BenchmarkSLog(b *testing.B) {
+	b.ReportAllocs()
+	b.StopTimer()
+	logger := slog.New(slog.NewTextHandler(io.Discard, nil))
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		logger.Info("failed to fetch URL",
+			"url", "http://foo.com",
+			"attempt", 3,
+			"backoff", time.Second,
 		)
 	}
 }
